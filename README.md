@@ -2,7 +2,7 @@
 
 Short links in, click counts out. Links expire in seven days.
 
-_Branch `main` — v1 · [design](docs/design.md) · [live](url)_
+_Branch `template` — v1 · [design](docs/design.md) · [live](url)_
 
 ## The story
 

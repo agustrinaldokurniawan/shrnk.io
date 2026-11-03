@@ -1,6 +1,6 @@
 # shrnk.io — design
 
-**Branch:** `{{GIT_BRANCH}}` · **Updated:** {{GIT_DATE}} · **Success:** p99 < 20 ms @ 10k rps
+**Branch:** `template` · **Updated:** `2026-11-03 18:26` · **Success:** p99 < 20 ms @ 10k rps
 
 ## 1 · Requirements
 

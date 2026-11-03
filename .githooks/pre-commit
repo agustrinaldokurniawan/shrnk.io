@@ -1,13 +1,24 @@
 #!/bin/sh
-FILE="README.md"
 
-if git diff --cached --name-only | grep -q "^${FILE}$"; then
-    BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    DATE=$(date +"%Y-%m-%d %H:%M:%S")
+FILES="README.md docs/design.md"
 
-    # Cross-platform sed (works on Windows Git Bash, macOS, and Linux)
-    TMP_FILE=$(mktemp)
-    sed "s/{{GIT_BRANCH}}/${BRANCH}/g; s/{{GIT_DATE}}/${DATE}/g" "$FILE" > "$TMP_FILE" && mv "$TMP_FILE" "$FILE"
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+DATE=$(date +"%Y-%m-%d %H:%M")
 
-    git add "$FILE"
-fi
+for FILE in $FILES; do
+    if [ -f "$FILE" ] && git diff --cached --name-only | grep -q "^${FILE}$"; then
+        TMP_FILE=$(mktemp)
+        
+        sed \
+            -e "s/{{GIT_BRANCH}}/${BRANCH}/g" \
+            -e "s/{{GIT_DATE}}/${DATE}/g" \
+            -e "s/\(\*\*Branch:\*\*\)[[:space:]]*\`[^\`]*\`/\1 \`${BRANCH}\`/g" \
+            -e "s/\(\*\*Branch:\*\*\)[[:space:]]*Branch[[:space:]][^·]*/\1 Branch ${BRANCH} /g" \
+            -e "s/\(\*\*Updated:\*\*\)[[:space:]]*<date>/\1 ${DATE}/g" \
+            -e "s/\(\*\*Updated:\*\*\)[[:space:]]*[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}[^·]*/\1 ${DATE} /g" \
+            "$FILE" > "$TMP_FILE"
+
+        mv "$TMP_FILE" "$FILE"
+        git add "$FILE"
+    fi
+done

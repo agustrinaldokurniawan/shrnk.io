@@ -1,6 +1,6 @@
 # shrnk.io — design
 
-**Branch:** `scale/10x` · **Updated:** <date> · **Success:** p99 < 20 ms @ 10k rps
+**Branch:** `{{GIT_BRANCH}}` · **Updated:** {{GIT_DATE}} · **Success:** p99 < 20 ms @ 10k rps
 
 ## 1 · Requirements
 
